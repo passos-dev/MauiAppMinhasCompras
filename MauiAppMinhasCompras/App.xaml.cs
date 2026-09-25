@@ -1,5 +1,4 @@
 ﻿using MauiAppMinhasCompras.Helpers;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace MauiAppMinhasCompras
 {
@@ -28,12 +27,10 @@ namespace MauiAppMinhasCompras
         {
 
             InitializeComponent();
-            MainPage = new NavigationPage(new Views.ListaProduto());
-        //}
 
-        //protected override Window CreateWindow(IActivationState? activationState)
-        //{
-            //return new Window(new AppShell());
+            //MainPage = new AppShell();
+            MainPage = new NavigationPage(new Views.ListaProduto());
+        
         }
     }
 }

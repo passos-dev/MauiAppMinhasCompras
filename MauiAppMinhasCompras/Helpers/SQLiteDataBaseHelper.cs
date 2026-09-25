@@ -9,8 +9,7 @@ namespace MauiAppMinhasCompras.Helpers
 
         public SQLiteDatabaseHelper(string path)
         {
-            _conn = new SQLiteAsyncConnection(path);
-            _conn.CreateTableAsync<Produto>().Wait();
+            _conn = new SQLiteAsyncConnection(path); 
         }
 
         public Task<int> Insert(Produto p)
@@ -34,7 +33,7 @@ namespace MauiAppMinhasCompras.Helpers
 
         public Task<List<Produto>> GetAll()
         {
-            return _conn.Table<Produto>().ToListAsync();
+            return _conn.Table<Produto>().ToListAsync(); 
         }
 
         public Task<List<Produto>> Search(string q)

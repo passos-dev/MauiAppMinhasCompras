@@ -42,7 +42,6 @@ public partial class ListaProduto : ContentPage
         }
     }
 
-
     private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
     {
         try
@@ -68,6 +67,27 @@ public partial class ListaProduto : ContentPage
         string msg = $"O total é {soma:C}";
 
         DisplayAlert("Total dos Produtos", msg, "OK");
+    }
+
+    private async void ToolbarItem_RelatorioCategoria_Clicked(object sender, EventArgs e)
+    {
+        try
+        {
+            var relatorio = lista
+                .GroupBy(p => string.IsNullOrWhiteSpace(p.Categoria) ? "Geral" : p.Categoria)
+                .Select(g => $"{g.Key}: {g.Sum(p => p.Total):C}")
+                .ToList();
+
+            string mensagem = relatorio.Count > 0
+                ? string.Join("\n", relatorio)
+                : "Nenhum produto cadastrado.";
+
+            await DisplayAlert("Relatório por Categoria", mensagem, "OK");
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
     }
 
     private async void MenuItem_Clicked(object sender, EventArgs e)
@@ -112,6 +132,24 @@ public partial class ListaProduto : ContentPage
         catch (Exception ex)
         {
             DisplayAlert("Ops", ex.Message, "OK");
+        }
+    }
+
+    private async void lst_produtos_Refreshing(object sender, EventArgs e)
+    {
+        try
+        {
+            lista.Clear();
+            List<Produto> tmp = await App.Db.GetAll();
+            tmp.ForEach(i => lista.Add(i));
+        }
+        catch (Exception ex)
+        {
+            await DisplayAlert("Ops", ex.Message, "OK");
+        }
+        finally
+        {
+            lst_produtos.IsRefreshing = false;
         }
     }
 }

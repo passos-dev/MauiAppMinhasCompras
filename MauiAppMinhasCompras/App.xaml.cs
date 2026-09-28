@@ -25,12 +25,11 @@ namespace MauiAppMinhasCompras
         }
         public App()
         {
-
             InitializeComponent();
 
-            //MainPage = new AppShell();
+            System.Threading.Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("pt-BR");
+
             MainPage = new NavigationPage(new Views.ListaProduto());
-        
         }
     }
 }
